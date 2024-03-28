@@ -5,19 +5,19 @@ class Book {
 private:
     const string author;
     const string title;
-    int quantity;
+    static int quantity;
     const int year;
-    bool available;
+    static bool available;
 
 public:
     Book(string  _author, string  _title, int _quantity, int _year, bool _available)
             : author(std::move(_author)), title(std::move(_title)), quantity(_quantity), year(_year), available(_available) {}
 
-    bool isAvailable() const {
+    static bool isAvailable() {
         return available && quantity > 0;
     }
 
-    void issueBook() {
+    static void issueBook() {
         if (isAvailable()) {
             --quantity;
             if (quantity == 0) {
@@ -28,14 +28,14 @@ public:
         }
     }
 
-    void increaseQuantity(int amount) {
+    static void increaseQuantity(int amount) {
         quantity += amount;
         if (quantity > 0) {
             available = true;
         }
     }
 
-    void decreaseQuantity(int amount) {
+    static void decreaseQuantity(int amount) {
         if (quantity >= amount) {
             quantity -= amount;
             if (quantity == 0) {
