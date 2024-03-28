@@ -1,17 +1,17 @@
 #include <iostream>
-#include <string>
+using namespace std;
 
 class Book {
 private:
-    std::string author;
-    std::string title;
+    const string author;
+    const string title;
     int quantity;
-    int year;
+    const int year;
     bool available;
 
 public:
-    Book(const std::string& _author, const std::string& _title, int _quantity, int _year, bool _available)
-            : author(_author), title(_title), quantity(_quantity), year(_year), available(_available) {}
+    Book(string  _author, string  _title, int _quantity, int _year, bool _available)
+            : author(std::move(_author)), title(std::move(_title)), quantity(_quantity), year(_year), available(_available) {}
 
     bool isAvailable() const {
         return available && quantity > 0;
@@ -24,7 +24,7 @@ public:
                 available = false;
             }
         } else {
-            std::cout << "Book is not available.\n";
+            cout << "Book is not available.\n";
         }
     }
 
@@ -47,10 +47,29 @@ public:
     }
 
     void print() const {
-        std::cout << "Author: " << author << std::endl;
-        std::cout << "Title: " << title << std::endl;
-        std::cout << "Quantity: " << quantity << std::endl;
-        std::cout << "Year: " << year << std::endl;
-        std::cout << "Available: " << (available ? "Yes" : "No") << std::endl;
+        cout << "Author: " << author << endl;
+        cout << "Title: " << title << endl;
+        cout << "Quantity: " << quantity << endl;
+        cout << "Year: " << year << endl;
+        cout << "Available: " << (available ? "Yes" : "No") << endl;
     }
 };
+
+int main() {
+    Book book1("Author1", "Title1", 10, 2000, true);
+    Book book2("Author2", "Title2", 5, 2010, true);
+
+    book1.print();
+    book2.print();
+
+    book1.issueBook();
+    book1.print();
+
+    book2.decreaseQuantity(3);
+    book2.print();
+
+    book1.increaseQuantity(5);
+    book1.print();
+
+    return 0;
+}
